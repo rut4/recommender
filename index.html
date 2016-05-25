@@ -1,0 +1,29 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<form id="recommendForm" action="/">
+    <input type="hidden" name="action" value="recommend">
+    <input type="text" name="user_id" placeholder="User Id" required>
+    <input type="submit" value="Recommend">
+</form>
+<ul id="result"></ul>
+<script>
+    $('#recommendForm').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function(data) {
+                data = JSON.parse(data);
+                $('#result').empty();
+                if (!data.result) {
+                    return;
+                }
+                for (var productId in data.result) {
+                    $('#result').append(
+                            $('<li></li>')
+                                    .text('User may be rate product #' + productId + ' with ' + data.result[productId])
+                    );
+                }
+            }
+        });
+    });
+</script>
