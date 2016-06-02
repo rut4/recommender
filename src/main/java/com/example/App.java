@@ -1,3 +1,10 @@
+/**
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * Copyright (C) 2016 Oggetto Web ltd (http://oggettoweb.com/), SFU (http://sfedu.ru)
+ */
+
 package com.example;
 
 import java.io.IOException;
@@ -9,7 +16,6 @@ import com.example.command.CommandFactory;
 import com.example.command.Recommend;
 import com.example.util.ServerRunner;
 import fi.iki.elonen.NanoHTTPD;
-
 
 public class App extends NanoHTTPD {
 
