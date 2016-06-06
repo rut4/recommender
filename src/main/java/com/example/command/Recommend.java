@@ -8,6 +8,7 @@
 package com.example.command;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import org.apache.mahout.cf.taste.common.NoSuchUserException;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
 import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLJDBCDataModel;
@@ -46,17 +47,23 @@ public class Recommend
     {
         try {
             Recommender recommender = com.example.Recommender.instance().getRecommender();
+            JSONObject result = new JSONObject();
 
+            if (this._data.get("user_id") == null) {
+                result.put("result", "");
+                return result.toString();
+            }
             Long userId = Long.decode(this._data.get("user_id"));
             List<RecommendedItem> recommendations = recommender.recommend(userId, 4);
 
-            JSONObject result = new JSONObject();
             Map<Long, Float> mapResult = new HashMap<>();
             for (RecommendedItem recommendation : recommendations) {
                 mapResult.put(recommendation.getItemID(), recommendation.getValue());
             }
             result.put("result", mapResult);
             return result.toString();
+        } catch (NoSuchUserException e) {
+            return (new JSONObject()).toString();
         } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();

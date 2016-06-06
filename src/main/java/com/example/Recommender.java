@@ -52,4 +52,9 @@ public class Recommender {
     {
         return this._recommender;
     }
+
+    public void reload()
+    {
+        _instance = null;
+    }
 }

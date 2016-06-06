@@ -8,6 +8,8 @@
 package com.example.command;
 
 import java.sql.Connection;
+
+import com.example.Recommender;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
@@ -58,6 +60,7 @@ public class Fill
             stmt.executeBatch();
             stmt.close();
             connection.close();
+            Recommender.instance().reload();
         } catch (Exception e) {
             e.printStackTrace();
         }
